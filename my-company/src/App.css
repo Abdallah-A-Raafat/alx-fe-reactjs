@@ -1,0 +1,73 @@
+/* Global styles for the company website */
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+/* Form styling for contact page */
+form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #333;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+/* Services list styling */
+ul {
+  max-width: 500px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 16px;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+/* Page content styling */
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+p {
+  color: #666;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
