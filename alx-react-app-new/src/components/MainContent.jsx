@@ -28,6 +28,17 @@ function MainContent() {
         This is the main content area where you can showcase your favorite cities, 
         travel experiences, and share interesting stories about different places around the world.
       </p>
+      <p style={{ 
+        fontSize: '18px', 
+        lineHeight: '1.6', 
+        color: '#e74c3c',
+        textAlign: 'center',
+        maxWidth: '800px',
+        margin: '20px auto',
+        fontWeight: 'bold'
+      }}>
+        I love to visit New York, Paris, and Tokyo.
+      </p>
       <div style={{
         display: 'flex',
         justifyContent: 'center',
