@@ -10,6 +10,7 @@ function Navbar() {
   const listStyle = {
     listStyle: 'none',
     display: 'flex',
+    justifyContent: 'center',
     gap: '20px',
     margin: 0,
     padding: 0
