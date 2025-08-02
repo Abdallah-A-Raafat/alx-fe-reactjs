@@ -37,6 +37,10 @@ const useRecipeStore = create((set, get) => ({
     }
   ],
   
+  // Favorites functionality
+  favorites: [],
+  recommendations: [],
+  
   addRecipe: (newRecipe) => set((state) => {
     const updatedRecipes = [...state.recipes, newRecipe];
     return { 
@@ -72,6 +76,63 @@ const useRecipeStore = create((set, get) => ({
     searchTerm: term,
     filteredRecipes: get().filterRecipesList(state.recipes, term)
   })),
+  
+  // Favorites actions
+  addFavorite: (recipeId) => set((state) => {
+    if (!state.favorites.includes(recipeId)) {
+      const updatedFavorites = [...state.favorites, recipeId];
+      // Auto-generate recommendations when favorites change
+      get().generateRecommendations();
+      return { favorites: updatedFavorites };
+    }
+    return state;
+  }),
+  
+  removeFavorite: (recipeId) => set((state) => {
+    const updatedFavorites = state.favorites.filter(id => id !== recipeId);
+    // Auto-generate recommendations when favorites change
+    get().generateRecommendations();
+    return { favorites: updatedFavorites };
+  }),
+  
+  // Recommendations actions
+  generateRecommendations: () => set((state) => {
+    // Enhanced recommendation algorithm
+    const favoriteRecipes = state.favorites.map(id => 
+      state.recipes.find(recipe => recipe.id === id)
+    ).filter(Boolean);
+    
+    if (favoriteRecipes.length === 0) {
+      // If no favorites, recommend popular recipes (first 2)
+      return { recommendations: state.recipes.slice(0, 2) };
+    }
+    
+    // Get keywords from favorite recipes
+    const favoriteKeywords = favoriteRecipes.flatMap(recipe => 
+      recipe.title.toLowerCase().split(' ').concat(
+        recipe.description.toLowerCase().split(' ')
+      )
+    );
+    
+    // Find recipes that match keywords from favorites but aren't already favorited
+    const recommended = state.recipes
+      .filter(recipe => !state.favorites.includes(recipe.id))
+      .map(recipe => {
+        const recipeWords = recipe.title.toLowerCase().split(' ').concat(
+          recipe.description.toLowerCase().split(' ')
+        );
+        const matchCount = recipeWords.filter(word => 
+          favoriteKeywords.includes(word) && word.length > 3
+        ).length;
+        return { recipe, matchCount };
+      })
+      .filter(item => item.matchCount > 0)
+      .sort((a, b) => b.matchCount - a.matchCount)
+      .slice(0, 3)
+      .map(item => item.recipe);
+    
+    return { recommendations: recommended };
+  }),
   
   filterRecipesList: (recipes, searchTerm) => {
     if (!searchTerm.trim()) {

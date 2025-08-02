@@ -7,10 +7,23 @@ import { useState } from 'react';
 const RecipeDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const recipe = useRecipeStore(state =>
-    state.recipes.find(recipe => recipe.id === parseInt(id))
-  );
+  const { recipe, favorites, addFavorite, removeFavorite } = useRecipeStore(state => ({
+    recipe: state.recipes.find(recipe => recipe.id === parseInt(id)),
+    favorites: state.favorites,
+    addFavorite: state.addFavorite,
+    removeFavorite: state.removeFavorite
+  }));
   const [isEditing, setIsEditing] = useState(false);
+
+  const handleToggleFavorite = () => {
+    if (favorites.includes(recipe.id)) {
+      removeFavorite(recipe.id);
+    } else {
+      addFavorite(recipe.id);
+    }
+  };
+
+  const isRecipeFavorited = favorites.includes(recipe?.id);
 
   if (!recipe) {
     return (
@@ -67,7 +80,26 @@ const RecipeDetails = () => {
       ) : (
         <div>
           <div style={{ marginBottom: '20px' }}>
-            <h1 style={{ marginBottom: '10px' }}>{recipe.title}</h1>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+              <h1 style={{ margin: '0', flex: 1 }}>{recipe.title}</h1>
+              <button
+                onClick={handleToggleFavorite}
+                style={{
+                  background: 'none',
+                  border: '2px solid #e74c3c',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  fontSize: '20px',
+                  cursor: 'pointer',
+                  marginLeft: '20px',
+                  backgroundColor: isRecipeFavorited ? '#e74c3c' : 'white'
+                }}
+                title={isRecipeFavorited ? 'Remove from favorites' : 'Add to favorites'}
+              >
+                {isRecipeFavorited ? '❤️' : '🤍'}
+              </button>
+            </div>
             <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#555' }}>
               {recipe.description}
             </p>
