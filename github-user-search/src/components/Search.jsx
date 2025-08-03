@@ -1,16 +1,25 @@
 import { useState } from 'react';
+import { fetchUserData } from '../services/githubService';
 
-const Search = ({ onSearch }) => {
+const Search = () => {
   const [username, setUsername] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username.trim()) return;
     
     setIsLoading(true);
+    setError(null);
+    setUserData(null);
+    
     try {
-      await onSearch(username.trim());
+      const data = await fetchUserData(username.trim());
+      setUserData(data);
+    } catch (err) {
+      setError(err.message);
     } finally {
       setIsLoading(false);
     }
@@ -37,6 +46,45 @@ const Search = ({ onSearch }) => {
           </button>
         </div>
       </form>
+
+      {/* Conditional Rendering for API States */}
+      {isLoading && (
+        <div className="loading-message">
+          <p>Loading...</p>
+        </div>
+      )}
+
+      {error && (
+        <div className="error-message">
+          <p>Looks like we cant find the user</p>
+        </div>
+      )}
+
+      {userData && !isLoading && !error && (
+        <div className="user-result">
+          <div className="user-avatar">
+            <img src={userData.avatar_url} alt={`${userData.login}'s avatar`} />
+          </div>
+          <div className="user-info">
+            <h3>{userData.name || userData.login}</h3>
+            <p className="username">@{userData.login}</p>
+            {userData.bio && <p className="bio">{userData.bio}</p>}
+            <div className="user-stats">
+              <span>Followers: {userData.followers}</span>
+              <span>Following: {userData.following}</span>
+              <span>Repos: {userData.public_repos}</span>
+            </div>
+            <a 
+              href={userData.html_url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="github-profile-link"
+            >
+              View GitHub Profile
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
