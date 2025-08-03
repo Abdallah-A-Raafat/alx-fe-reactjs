@@ -39,9 +39,9 @@ const Search = () => {
             setIsLoading(false);
             return;
           }
-        } catch (directError) {
+        } catch {
           // If direct lookup fails, fall back to search
-          console.log('Direct user lookup failed, falling back to search:', directError.message);
+          // Silently continue to search API fallback
         }
       }
       
@@ -74,8 +74,9 @@ const Search = () => {
       // Fetch user repositories
       const repos = await fetchUserRepos(user.login);
       setUserRepos(repos);
-    } catch (err) {
-      console.error('Failed to fetch user details:', err.message);
+    } catch {
+      // Silently handle user details fetch errors
+      // The basic user information is still available
     } finally {
       setLoadingDetails(false);
     }

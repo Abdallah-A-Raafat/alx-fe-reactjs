@@ -79,9 +79,9 @@ export const fetchUsers = async ({ username, location, minRepos, page = 1 }) => 
             score: user.score,
             id: user.id
           };
-        } catch (detailError) {
+        } catch {
           // If detailed fetch fails, return basic user info
-          console.warn(`Failed to fetch details for user ${user.login}:`, detailError.message);
+          // Silently handle the error for production
           return user;
         }
       })
