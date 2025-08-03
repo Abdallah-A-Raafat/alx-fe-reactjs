@@ -1,3 +1,14 @@
+/**
+ * GitHub API Service
+ * 
+ * This service provides integration with GitHub's REST API v3
+ * Main endpoints used:
+ * - https://api.github.com/search/users?q={query} - Advanced user search
+ * - https://api.github.com/users/{username} - Individual user details
+ * - https://api.github.com/users/{username}/repos - User repositories
+ * 
+ * API Documentation: https://docs.github.com/en/rest
+ */
 import axios from 'axios';
 
 const BASE_URL = 'https://api.github.com';
@@ -31,6 +42,7 @@ export const fetchUserData = async (username) => {
 };
 
 // Advanced user search using GitHub Search API
+// Example API endpoint: https://api.github.com/search/users?q={query}
 export const fetchUsers = async ({ username, location, minRepos, page = 1 }) => {
   try {
     let query = '';
@@ -43,15 +55,79 @@ export const fetchUsers = async ({ username, location, minRepos, page = 1 }) => 
       throw new Error('Please provide at least one search criterion');
     }
 
+    // GitHub Search API parameters
     const params = {
       q: query,
       per_page: 10,
       page,
+      sort: 'best-match',
+      order: 'desc'
+    };
+
+    // Make request to https://api.github.com/search/users?q={query}
+    const response = await githubAPI.get('/search/users', { params });
+    
+    // Fetch additional details for each user to get more complete information
+    const usersWithDetails = await Promise.all(
+      response.data.items.map(async (user) => {
+        try {
+          const detailResponse = await githubAPI.get(`/users/${user.login}`);
+          return {
+            ...user,
+            ...detailResponse.data,
+            // Preserve search-specific fields
+            score: user.score,
+            id: user.id
+          };
+        } catch (detailError) {
+          // If detailed fetch fails, return basic user info
+          console.warn(`Failed to fetch details for user ${user.login}:`, detailError.message);
+          return user;
+        }
+      })
+    );
+
+    return {
+      ...response.data,
+      items: usersWithDetails
+    };
+  } catch (error) {
+    throw new Error(`Failed to search users: ${error.response?.data?.message || error.message}`);
+  }
+};
+
+// Search repositories for a specific user
+// API endpoint: https://api.github.com/users/{username}/repos
+export const fetchUserRepos = async (username, page = 1) => {
+  try {
+    const params = {
+      sort: 'updated',
+      per_page: 10,
+      page
+    };
+    
+    const response = await githubAPI.get(`/users/${username}/repos`, { params });
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch repositories: ${error.response?.data?.message || error.message}`);
+  }
+};
+
+// Search for users by advanced criteria using GitHub Search API
+// API endpoint: https://api.github.com/search/users?q={advanced_query}
+export const searchUsersByQuery = async (searchQuery, page = 1) => {
+  try {
+    const params = {
+      q: searchQuery,
+      per_page: 10,
+      page,
+      sort: 'followers',
+      order: 'desc'
     };
 
     const response = await githubAPI.get('/search/users', { params });
     return response.data;
   } catch (error) {
-    throw new Error(`Failed to search users: ${error.response?.data?.message || error.message}`);
+    throw new Error(`Failed to search users by query: ${error.response?.data?.message || error.message}`);
   }
 };
