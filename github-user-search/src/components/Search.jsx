@@ -104,41 +104,124 @@ const Search = () => {
         )}
         {!isLoading && users.length > 0 && (
           <div>
-            <div className="mb-2 text-gray-700 font-semibold">{totalCount} users found</div>
-            <ul className="divide-y divide-gray-200">
+            <div className="mb-4 text-gray-700 font-semibold text-lg">{totalCount.toLocaleString()} users found</div>
+            <div className="space-y-4">
               {users.map((user) => (
-                <li key={user.id} className="flex items-center gap-4 py-4">
-                  <img src={user.avatar_url} alt={user.login} className="w-14 h-14 rounded-full border" />
-                  <div className="flex-1">
-                    <div className="font-bold text-lg text-gray-800">{user.login}</div>
-                    <a
-                      href={user.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline text-sm"
-                    >
-                      View Profile
-                    </a>
+                <div key={user.id} className="flex items-start gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                  <img 
+                    src={user.avatar_url} 
+                    alt={user.login} 
+                    className="w-16 h-16 rounded-full border-2 border-gray-200" 
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="font-bold text-xl text-gray-900 truncate">{user.login}</h3>
+                        {user.name && (
+                          <p className="text-gray-600 font-medium">{user.name}</p>
+                        )}
+                        {user.bio && (
+                          <p className="text-gray-700 mt-1 text-sm line-clamp-2">{user.bio}</p>
+                        )}
+                      </div>
+                      <div className="flex flex-col items-end text-right ml-4">
+                        <span className="text-sm text-gray-500">Score: {user.score?.toFixed(1)}</span>
+                        {user.type && (
+                          <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full mt-1">
+                            {user.type}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-4 mt-3 text-sm text-gray-600">
+                      {user.location && (
+                        <span className="flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                          </svg>
+                          {user.location}
+                        </span>
+                      )}
+                      {user.public_repos !== undefined && (
+                        <span className="flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                          </svg>
+                          {user.public_repos} repos
+                        </span>
+                      )}
+                      {user.followers !== undefined && (
+                        <span className="flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                          </svg>
+                          {user.followers} followers
+                        </span>
+                      )}
+                    </div>
+                    
+                    <div className="flex gap-2 mt-3">
+                      <a
+                        href={user.html_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 bg-gray-900 text-white px-3 py-1.5 rounded text-sm font-medium hover:bg-gray-800 transition-colors"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clipRule="evenodd" />
+                        </svg>
+                        View Profile
+                      </a>
+                      {user.blog && (
+                        <a
+                          href={user.blog.startsWith('http') ? user.blog : `https://${user.blog}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 bg-blue-600 text-white px-3 py-1.5 rounded text-sm font-medium hover:bg-blue-700 transition-colors"
+                        >
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
+                          </svg>
+                          Website
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
             {/* Pagination */}
-            <div className="flex justify-between items-center mt-4">
+            <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
               <button
                 onClick={() => handlePageChange(page - 1)}
                 disabled={page === 1 || isLoading}
-                className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
                 Previous
               </button>
-              <span className="text-gray-700">Page {page}</span>
+              
+              <div className="flex items-center gap-2">
+                <span className="text-gray-700 font-medium">
+                  Page {page} of {Math.ceil(totalCount / 10)}
+                </span>
+                <span className="text-gray-500 text-sm">
+                  ({((page - 1) * 10) + 1}-{Math.min(page * 10, totalCount)} of {totalCount.toLocaleString()})
+                </span>
+              </div>
+              
               <button
                 onClick={() => handlePageChange(page + 1)}
                 disabled={page * 10 >= totalCount || isLoading}
-                className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Next
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </button>
             </div>
           </div>

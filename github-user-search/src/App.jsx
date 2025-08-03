@@ -3,13 +3,15 @@ import { Search } from './components';
 
 function App() {
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <h1>GitHub User Search</h1>
-        <p>Search for GitHub users and explore their profiles</p>
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-4xl mx-auto px-4 py-6 text-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">GitHub User Search</h1>
+          <p className="text-gray-600">Search for GitHub users and explore their profiles</p>
+        </div>
       </header>
       
-      <main className="app-main">
+      <main className="max-w-4xl mx-auto px-4 py-8">
         <Search />
       </main>
     </div>

@@ -32,18 +32,26 @@ export const fetchUserData = async (username) => {
 
 // Advanced user search using GitHub Search API
 export const fetchUsers = async ({ username, location, minRepos, page = 1 }) => {
-  let query = '';
-  if (username) query += `${username} in:login`;
-  if (location) query += ` location:${location}`;
-  if (minRepos) query += ` repos:>=${minRepos}`;
-  query = query.trim();
+  try {
+    let query = '';
+    if (username) query += `${username} in:login`;
+    if (location) query += ` location:${location}`;
+    if (minRepos) query += ` repos:>=${minRepos}`;
+    query = query.trim();
 
-  const params = {
-    q: query,
-    per_page: 10,
-    page,
-  };
+    if (!query) {
+      throw new Error('Please provide at least one search criterion');
+    }
 
-  const response = await githubAPI.get(`${BASE_URL}/search/users`, { params });
-  return response.data;
+    const params = {
+      q: query,
+      per_page: 10,
+      page,
+    };
+
+    const response = await githubAPI.get('/search/users', { params });
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to search users: ${error.response?.data?.message || error.message}`);
+  }
 };
