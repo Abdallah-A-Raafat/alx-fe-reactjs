@@ -29,3 +29,21 @@ export const fetchUserData = async (username) => {
     throw new Error(`Failed to fetch user data: ${error.response?.data?.message || error.message}`);
   }
 };
+
+// Advanced user search using GitHub Search API
+export const fetchUsers = async ({ username, location, minRepos, page = 1 }) => {
+  let query = '';
+  if (username) query += `${username} in:login`;
+  if (location) query += ` location:${location}`;
+  if (minRepos) query += ` repos:>=${minRepos}`;
+  query = query.trim();
+
+  const params = {
+    q: query,
+    per_page: 10,
+    page,
+  };
+
+  const response = await githubAPI.get(`${BASE_URL}/search/users`, { params });
+  return response.data;
+};
