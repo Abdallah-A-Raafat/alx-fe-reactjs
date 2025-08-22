@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import Profile from './components/Profile';
-import ProfileDetails from './ProfileDetails';
-import ProfileSettings from './ProfileSettings';
+import ProfileDetails from './components/ProfileDetails';
+import ProfileSettings from './components/ProfileSettings';
 import BlogPost from './BlogPost';
 import Login from './Login';
 
