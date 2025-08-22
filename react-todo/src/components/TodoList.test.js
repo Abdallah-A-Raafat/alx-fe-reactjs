@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import TodoList from '../components/TodoList';
+import TodoList from './TodoList';
 
 describe('TodoList Component', () => {
   test('renders todo list with initial todos', () => {
