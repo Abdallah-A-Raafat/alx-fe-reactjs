@@ -1,13 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 
+// Fetch function for posts
+const fetchPosts = async () => {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  if (!res.ok) throw new Error('Network response was not ok');
+  return res.json();
+};
+
 function PostsComponent() {
   const { data, error, isLoading, isError, refetch, isFetching } = useQuery({
     queryKey: ['posts'],
-    queryFn: async () => {
-      const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-      if (!res.ok) throw new Error('Network response was not ok');
-      return res.json();
-    },
+    queryFn: fetchPosts,
     staleTime: 1000 * 60, // 1 minute
     cacheTime: 1000 * 60 * 5, // 5 minutes
   });
