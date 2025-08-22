@@ -12,30 +12,35 @@ A comprehensive React application showcasing modern development practices, advan
 ## ✨ Features
 
 ### 📝 **Form Management**
+
 - **Controlled Components** - Traditional React form handling with state management
 - **Formik Integration** - Advanced form handling with validation and error management
 - **Yup Validation** - Schema-based form validation
 - **Real-time Validation** - Instant feedback on form inputs
 
 ### 🌐 **Data Fetching & Caching**
+
 - **React Query** - Server state management with intelligent caching
 - **API Integration** - JSONPlaceholder API for realistic data operations
 - **Loading States** - Beautiful loading indicators and error handling
 - **Background Refetching** - Automatic data synchronization
 
 ### 🧭 **Advanced Routing**
+
 - **React Router v6** - Modern routing with nested routes
 - **Protected Routes** - Authentication-based route protection
 - **Dynamic Routing** - URL parameters and dynamic content
 - **Nested Layouts** - Complex layout hierarchies
 
 ### ✅ **Todo Management**
+
 - **CRUD Operations** - Create, read, update, delete todos
 - **State Persistence** - Local state management
 - **Interactive UI** - Drag, drop, and toggle functionality
 - **Comprehensive Testing** - Full test coverage with Jest & React Testing Library
 
 ### 🎨 **Modern UI/UX**
+
 - **Glassmorphism Design** - Modern frosted glass aesthetic
 - **Gradient Animations** - Smooth color transitions and effects
 - **Responsive Layout** - Mobile-first responsive design
@@ -43,38 +48,42 @@ A comprehensive React application showcasing modern development practices, advan
 
 ## 🛠 Tech Stack
 
-| Technology | Purpose | Version |
-|------------|---------|---------|
-| **React** | Frontend Framework | 18+ |
-| **Vite** | Build Tool & Dev Server | 4+ |
-| **React Query** | Server State Management | 4+ |
-| **React Router** | Client-side Routing | 6+ |
-| **Formik** | Form Management | 2+ |
-| **Yup** | Schema Validation | 1+ |
-| **Jest** | Testing Framework | 29+ |
-| **React Testing Library** | Component Testing | 13+ |
-| **CSS3** | Styling & Animations | - |
+| Technology                | Purpose                 | Version |
+| ------------------------- | ----------------------- | ------- |
+| **React**                 | Frontend Framework      | 18+     |
+| **Vite**                  | Build Tool & Dev Server | 4+      |
+| **React Query**           | Server State Management | 4+      |
+| **React Router**          | Client-side Routing     | 6+      |
+| **Formik**                | Form Management         | 2+      |
+| **Yup**                   | Schema Validation       | 1+      |
+| **Jest**                  | Testing Framework       | 29+     |
+| **React Testing Library** | Component Testing       | 13+     |
+| **CSS3**                  | Styling & Animations    | -       |
 
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 16+ and npm/yarn
 - Modern web browser with ES6+ support
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/Abdallah-A-Raafat/alx-fe-reactjs.git
    cd alx-fe-reactjs/form-handling-react
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Start development server**
+
    ```bash
    npm run dev
    ```
@@ -133,24 +142,28 @@ src/
 ## 🎯 Key Learning Objectives
 
 ### 🎨 **Form Handling Mastery**
+
 - Master controlled vs uncontrolled components
 - Implement complex validation logic
 - Handle form state efficiently
 - Create reusable form components
 
 ### 📊 **State Management Patterns**
+
 - Server state vs client state separation
 - Caching strategies and optimization
 - Real-time data synchronization
 - Error boundary implementation
 
 ### 🛣 **Routing Architecture**
+
 - Nested route structures
 - Route-based code splitting
 - Authentication flows
 - URL state management
 
 ### 🧪 **Testing Best Practices**
+
 - Component testing strategies
 - Integration testing patterns
 - Mocking external dependencies
@@ -159,6 +172,7 @@ src/
 ## 🎨 Design System
 
 ### Color Palette
+
 - **Primary**: `#4f46e5` (Indigo)
 - **Secondary**: `#06b6d4` (Cyan)
 - **Success**: `#10b981` (Emerald)
@@ -166,11 +180,13 @@ src/
 - **Warning**: `#f59e0b` (Amber)
 
 ### Typography
+
 - **Font Family**: Inter, Segoe UI, system fonts
 - **Headings**: 600-700 weight with gradient effects
 - **Body**: 400-500 weight with optimal line height
 
 ### Effects
+
 - **Glassmorphism**: `backdrop-filter: blur(20px)`
 - **Shadows**: Layered box-shadows for depth
 - **Animations**: CSS transitions and keyframes
