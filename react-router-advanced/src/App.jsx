@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './AuthContext';
 import ProtectedRoute from './ProtectedRoute';
-import Profile from './Profile';
+import Profile from './components/Profile';
 import ProfileDetails from './ProfileDetails';
 import ProfileSettings from './ProfileSettings';
 import BlogPost from './BlogPost';
