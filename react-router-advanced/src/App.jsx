@@ -38,14 +38,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/blog/:postId" element={<BlogPost />} />
-          <Route path="/profile" element={
+          <Route path="/profile/*" element={
             <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
-          }>
-            <Route path="details" element={<ProfileDetails />} />
-            <Route path="settings" element={<ProfileSettings />} />
-          </Route>
+          } />
         </Routes>
       </Router>
     </AuthProvider>
